@@ -32,7 +32,30 @@ def save_text(filename, text):
     return path
 
 
-def save_report(filename, task, status, thinking, plan, result, error=""):
+def save_report(
+    filename,
+    task,
+    status="done",
+    thinking="",
+    plan=None,
+    result="",
+    error="",
+):
+    valid_status = {"pending", "running", "done", "failed"}
+
+    # Backward compatibility: save_report(filename, task, thinking, plan)
+    legacy_call = (
+        plan is None
+        and isinstance(thinking, (list, tuple))
+        and status not in valid_status
+    )
+    if legacy_call:
+        plan = list(thinking)
+        thinking = status
+        status = "done"
+
+    if plan is None:
+        plan = []
     path = OUTPUT_DIR / filename
 
     content = f"""# 任务报告
