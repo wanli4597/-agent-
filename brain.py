@@ -13,7 +13,7 @@ def call_ollama(prompt):
     response = requests.post(
         OLLAMA_URL,
         json={"model": MODEL, "prompt": prompt, "stream": False},
-        headers=headers or None,
+        headers=headers,
         timeout=REQUEST_TIMEOUT,
     )
     response.raise_for_status()
