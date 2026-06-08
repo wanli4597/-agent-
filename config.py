@@ -1,6 +1,9 @@
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "qwen2.5:7b"
-REQUEST_TIMEOUT = 180
+import os
+
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
+MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:7b")
+REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "180"))
+OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "")
 
 APP_NAME = "Nova AI Assistant"
 APP_LEVEL = "Nova Final Edition"

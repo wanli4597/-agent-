@@ -32,7 +32,22 @@ def save_text(filename, text):
     return path
 
 
-def save_report(filename, task, status, thinking, plan, result, error=""):
+def save_report(
+    filename,
+    task,
+    status="done",
+    thinking="",
+    plan=None,
+    result="",
+    error="",
+):
+    if plan is None and isinstance(thinking, (list, tuple)):
+        plan = list(thinking)
+        thinking = status
+        status = "done"
+
+    if plan is None:
+        plan = []
     path = OUTPUT_DIR / filename
 
     content = f"""# 任务报告

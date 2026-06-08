@@ -1,14 +1,19 @@
 import requests
 from memory import load_memory
-from config import OLLAMA_URL, MODEL, REQUEST_TIMEOUT
+from config import OLLAMA_URL, MODEL, REQUEST_TIMEOUT, OLLAMA_API_KEY
 from logger import log
 from models import BrainResult
 
 
 def call_ollama(prompt):
+    headers = {}
+    if OLLAMA_API_KEY:
+        headers["X-API-Key"] = OLLAMA_API_KEY
+
     response = requests.post(
         OLLAMA_URL,
         json={"model": MODEL, "prompt": prompt, "stream": False},
+        headers=headers or None,
         timeout=REQUEST_TIMEOUT,
     )
     response.raise_for_status()
